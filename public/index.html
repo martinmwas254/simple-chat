@@ -6,62 +6,112 @@
     <title>Real-Time Chat</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             height: 100vh;
+            background-color: #f4f4f9;
+            color: #333;
         }
         #chat {
             flex: 1;
-            padding: 10px;
+            padding: 20px;
             overflow-y: auto;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
         }
         .message {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .message-content {
             flex: 1;
+            margin-right: 10px;
+        }
+        .message-content strong {
+            color: #007bff;
+        }
+        .message-content .timestamp {
+            font-size: 0.85em;
+            color: #666;
         }
         .delete-button {
-            background-color: #dc3545;
+            background-color: #ff4d4d;
             color: white;
             border: none;
             padding: 5px 10px;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .delete-button:hover {
+            background-color: #cc0000;
         }
         #message-input {
             display: flex;
-            padding: 10px;
+            padding: 15px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
         }
         #message-input input {
             flex: 1;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
             border-radius: 4px;
+            margin-right: 10px;
+            font-size: 1em;
+        }
+        #message-input input:focus {
+            border-color: #007bff;
+            outline: none;
         }
         #message-input button {
             padding: 10px 20px;
-            margin-left: 10px;
-            background-color: #28a745;
+            background-color: #007bff;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        #message-input button:hover {
+            background-color: #0056b3;
         }
         .error {
-            color: red;
+            color: #ff4d4d;
             margin: 10px 0;
+            padding: 10px;
+            background-color: #ffe6e6;
+            border: 1px solid #ff4d4d;
+            border-radius: 4px;
+            text-align: center;
+        }
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            #message-input {
+                flex-direction: column;
+            }
+            #message-input input {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            #message-input button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <h2 style="text-align:center">Simple Chat</h2>
     <div id="chat"></div>
     <div id="message-input">
         <input type="text" id="username" placeholder="Enter your username" required>
@@ -112,7 +162,11 @@
 
             const messageContent = document.createElement('div');
             messageContent.className = 'message-content';
-            messageContent.innerHTML = `<strong>${message.username}</strong> (${message.timestamp}): ${message.message}`;
+            messageContent.innerHTML = `
+                <strong>${message.username}</strong> 
+                <span class="timestamp">(${message.timestamp})</span>: 
+                ${message.message}
+            `;
 
             // Only show the delete button if the message was sent by the current user
             if (message.username === currentUsername) {
